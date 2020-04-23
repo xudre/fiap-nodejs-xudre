@@ -1,0 +1,26 @@
+{
+  "name": "fiap-nodejs-xudre",
+  "version": "1.0.0",
+  "description": "API em NodeJS durante MBA.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xudre/fiap-nodejs-xudre.git"
+  },
+  "author": "Pedro Xudre",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/xudre/fiap-nodejs-xudre/issues"
+  },
+  "homepage": "https://github.com/xudre/fiap-nodejs-xudre#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "firebase": "^7.14.1",
+    "jsonwebtoken": "^8.5.1",
+    "nodemon": "^2.0.3"
+  }
+}
