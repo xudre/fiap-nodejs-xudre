@@ -1,9 +1,9 @@
 const express = require('express');
+const UsersControl = require('../controller/Users');
 
+const control = new UsersControl();
 const router = express.Router();
 
-router.get('/:id', (req, res) => {
-    res.send(`Eu recebi o parâmetro ${req.params.id}`);
-});
+router.get('/:id', control.get);
 
 module.exports = router;
