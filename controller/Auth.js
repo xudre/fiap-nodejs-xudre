@@ -30,8 +30,12 @@ class Auth {
                     return;
                 }
 
+                const user = users.docs[0].data();
+
+                delete user.password;
+
                 res.json({
-                    token: createToken({ id: users.docs[0].id })
+                    token: createToken(user)
                 });
             })
             .catch((error) => {

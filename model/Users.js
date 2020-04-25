@@ -5,8 +5,20 @@ class Users extends BaseModel {
         super();
     }
 
+    add(payload) {
+        return this.db.collection('users').add(payload);
+    }
+
     get(id) {
         return this.db.collection('users').doc(id).get();
+    }
+
+    update(id, payload) {
+        return this.db.collection('users').doc(id).set(payload);
+    }
+
+    remove(id) {
+        return this.db.collection('users').doc(id).remove();
     }
 
     getBy(conditions) {

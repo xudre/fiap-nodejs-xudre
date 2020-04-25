@@ -4,3 +4,5 @@ class ApiError {
         this.code = code;
     }
 }
+
+module.exports = ApiError;
