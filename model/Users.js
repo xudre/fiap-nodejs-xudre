@@ -17,8 +17,8 @@ class Users extends BaseModel {
         return this.db.collection('users').doc(id).set(payload);
     }
 
-    remove(id) {
-        return this.db.collection('users').doc(id).remove();
+    delete(id) {
+        return this.db.collection('users').doc(id).delete();
     }
 
     getBy(conditions) {

@@ -69,7 +69,7 @@ class Users {
     delete(req, res) {
         const { id } = req.params;
 
-        usersModel.remove(id).then(() => {
+        usersModel.delete(id).then(() => {
             res.json();
         });
     }
