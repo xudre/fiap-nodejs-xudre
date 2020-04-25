@@ -15,6 +15,9 @@ const verifyToken = (req, res, next) => {
             return res.status(401).send(new ApiError('Não autorizado', 'not_authorized'));
         }
 
+        // Trafegando dados do usuário autenticado entre as requests:
+        res.locals.user = decode;
+
         next();
     });
 };
