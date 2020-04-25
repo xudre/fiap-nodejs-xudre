@@ -23,11 +23,9 @@ class Auth {
             ])
             .then((users) => {
                 if (users.empty) {
-                    res.status(401).send(
+                    return res.status(401).send(
                         new ApiError('Usuario não autorizado', 'not_authorized')
                     );
-
-                    return;
                 }
 
                 const user = users.docs[0].data();

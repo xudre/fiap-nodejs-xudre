@@ -10,7 +10,7 @@ class Users {
             .get(id)
             .then((user) => {
                 if (!user.exists) {
-                    res.status(404).send(
+                    return res.status(404).send(
                         new ApiError('Usuario não encontrado', 'not_found')
                     );
                 }
