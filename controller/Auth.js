@@ -1,6 +1,7 @@
 const ApiError = require('../class/ApiError');
 const UserModel = require('../model/Users');
 const createToken = require('../utils/createToken');
+const cryptoPassword = require('../utils/cryptoPassword');
 
 const userModel = new UserModel();
 
@@ -18,7 +19,7 @@ class Auth {
                 {
                     field: 'password',
                     operator: '==',
-                    value: password,
+                    value: cryptoPassword(password),
                 },
             ])
             .then((users) => {

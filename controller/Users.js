@@ -1,5 +1,7 @@
 const ApiError = require('../class/ApiError');
 const UsersModel = require('../model/Users');
+const cryptoPassword = require('../utils/cryptoPassword');
+
 const usersModel = new UsersModel();
 
 class Users {
@@ -10,12 +12,18 @@ class Users {
             .get(id)
             .then((user) => {
                 if (!user.exists) {
-                    return res.status(404).send(
-                        new ApiError('Usuario não encontrado', 'not_found')
-                    );
+                    return res
+                        .status(404)
+                        .send(
+                            new ApiError('Usuario não encontrado', 'not_found')
+                        );
                 }
 
-                res.json(user.data());
+                const data = user.data();
+
+                delete data.password;
+
+                res.json(data);
             })
             .catch((error) => {
                 res.status(500).send(error);
@@ -25,23 +33,42 @@ class Users {
     post(req, res) {
         const { email, password, name } = req.body;
 
-        const payload = {
-            email,
-            password,
-            name,
-        };
+        usersModel
+            .getBy([
+                {
+                    field: 'email',
+                    operator: '==',
+                    value: email,
+                },
+            ])
+            .then((user) => {
+                if (user.empty) {
+                    const payload = {
+                        email,
+                        name,
+                        password: cryptoPassword(password),
+                    };
 
-        usersModel.add(payload).then((ref) => {
-            ref.get().then((snapshot) => {
-                const data = snapshot.data();
+                    usersModel.add(payload).then((ref) => {
+                        ref.get().then((snapshot) => {
+                            const data = snapshot.data();
 
-                delete snapshot.password;
+                            delete data.password;
 
-                data.id = ref.id;
+                            data.id = ref.id;
 
-                res.status(201).json(data);
+                            res.status(201).json(data);
+                        });
+                    });
+                } else {
+                    res.status(403).send(
+                        new ApiError(
+                            'Já existe usuário com esse email',
+                            'data_conflict'
+                        )
+                    );
+                }
             });
-        });
     }
 
     put(req, res) {
@@ -57,11 +84,11 @@ class Users {
             ref.get().then((snapshot) => {
                 const data = snapshot.data();
 
-                delete snapshot.password;
+                delete data.password;
 
                 data.id = ref.id;
 
-                res.json(snapshot);
+                res.json(data);
             });
         });
     }
