@@ -7,6 +7,12 @@ const userModel = new UserModel();
 
 class Auth {
     validate(req, res) {
+        if (!req.body.email || !req.body.password) {
+            return res.status(400).send(
+                new ApiError('Email e senha são obrigatórios', 'no_valid_data')
+            );
+        }
+
         const { email, password } = req.body;
 
         userModel

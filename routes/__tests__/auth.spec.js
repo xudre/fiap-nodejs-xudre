@@ -27,8 +27,19 @@ describe('/POST auth', () => {
             })
             .set('Accept', 'application/json')
             .expect(401, {
-                code: 'not_authorized',
-                message: 'Usuario não autorizado'
+                message: 'Usuario não autorizado',
+                code: 'not_authorized'
+            }, done);
+    });
+
+    it('do not have sent valid users credentials', done => {
+        supertest(app)
+            .post('/auth')
+            .send()
+            .set('Accept', 'application/json')
+            .expect(400, {
+                message: 'Email e senha são obrigatórios',
+                code: 'no_valid_data'
             }, done);
     });
 });
